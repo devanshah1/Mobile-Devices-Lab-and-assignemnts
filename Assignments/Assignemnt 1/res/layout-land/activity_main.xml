@@ -27,41 +27,6 @@
        android:gravity="center"
        android:paddingTop="1dp">
 
-       <Button
-           android:id="@+id/button1"
-           style="?android:attr/buttonStyleSmall"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/BackSpace" />
-
-       <Button
-           android:id="@+id/button2"
-           style="?android:attr/buttonStyleSmall"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/Clear_Entry" />
-
-       <Button
-           android:id="@+id/button3"
-           style="?android:attr/buttonStyleSmall"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/Clear" />
-
-       <Button
-           android:id="@+id/button4"
-           style="?android:attr/buttonStyleSmall"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/positive_negitive" />
-
-       <Button
-           android:id="@+id/button18"
-           style="?android:attr/buttonStyleSmall"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/square_root" />
-
    </LinearLayout>
    <LinearLayout android:orientation="horizontal"
        android:layout_width="fill_parent"
@@ -69,6 +34,13 @@
        android:layout_gravity="center"
        android:gravity="center"
        android:paddingTop="1dp">
+
+       <Button
+           android:id="@+id/button3"
+           style="?android:attr/buttonStyleSmall"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/Clear" />
 
        <Button
            android:id="@+id/button5"
@@ -104,6 +76,13 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="@string/perctange" />
+
+       <Button
+           android:id="@+id/button4"
+           style="?android:attr/buttonStyleSmall"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/positive_negitive" />
     
    </LinearLayout>
    <LinearLayout android:orientation="horizontal"
@@ -112,6 +91,13 @@
        android:layout_gravity="center"
        android:gravity="center"
        android:paddingTop="1dp">
+
+       <Button
+           android:id="@+id/button2"
+           style="?android:attr/buttonStyleSmall"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/Clear_Entry" />
 
        <Button
            android:id="@+id/button9"
@@ -147,6 +133,13 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="@string/one_over" />
+
+       <Button
+           android:id="@+id/button18"
+           style="?android:attr/buttonStyleSmall"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/square_root" />
     
    </LinearLayout>
    <LinearLayout android:orientation="horizontal"
@@ -155,6 +148,13 @@
        android:layout_gravity="center"
        android:gravity="center"
        android:paddingTop="1dp">
+
+       <Button
+           android:id="@+id/button1"
+           style="?android:attr/buttonStyleSmall"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/BackSpace" />
 
        <Button
            android:id="@+id/button13"
@@ -190,6 +190,13 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="@string/squared" />
+
+       <Button
+           android:id="@+id/button24"
+           style="?android:attr/buttonStyleSmall"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/log_base_ten" />
     
    </LinearLayout>
 
@@ -222,11 +229,11 @@
            android:text="@string/add" />
 
        <Button
-           android:id="@+id/button24"
-           style="?android:attr/buttonStyleSmall"
-           android:layout_width="wrap_content"
+           android:id="@+id/button25"
+           android:layout_width="145dp"
            android:layout_height="wrap_content"
-           android:text="@string/log_base_ten" />
+           android:text="@string/equal"
+           android:textSize="20sp" />
 
    </LinearLayout>
 
@@ -234,14 +241,6 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:orientation="vertical" >
-
-       <Button
-           android:id="@+id/button25"
-           android:layout_width="244dp"
-           android:layout_height="44dp"
-           android:layout_gravity="center"
-           android:text="@string/equal"
-           android:textSize="20sp" />
 
    </LinearLayout>
 
