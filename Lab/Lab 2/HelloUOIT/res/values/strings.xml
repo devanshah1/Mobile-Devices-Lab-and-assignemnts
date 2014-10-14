@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Hello UOIT</string>
+    <string name="action_settings">Settings</string>
+    <string name="Hello_Uoit">Hello, Welcome to UOIT</string>
+    <string name="Your_name">Your Name:</string>
+    <string name="OK">OK</string>
+    <string name="title_activity_display_message">DisplayMessage</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="welcome">Welcome</string>
+    <string name="uoit_logo">UOIT LOGO</string>
+    <string name="Restore">RESTORE</string>
+
+</resources>
