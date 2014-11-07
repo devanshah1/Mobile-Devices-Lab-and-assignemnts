@@ -23,18 +23,22 @@ import android.view.MenuItem;
 @SuppressLint({ "UseSparseArrays", "UseValueOf", "NewApi" })
 public class NotesStart extends ActionBarActivity {
 
-	// public ArrayList<Notes> notes;
+	public static String action;
+	public static int listPosition;
 	public Vector<Object> notes;
 	public NotesDescription myNotesDescription;
 	public NotesList myNotesList;
 	public File notesRawDataFile ;
-	
+    private final String actionTag = "actionTag";
+    private final String listPositionTag = "listPositionTag" ;
+    
 	/**
 	 * 
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
+		
 		super.onCreate(savedInstanceState);
 		notes = new Vector<Object>() ;
 
@@ -45,22 +49,24 @@ public class NotesStart extends ActionBarActivity {
         {
     		myNotesList = new NotesList();
     		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-    		transaction.add(R.id.notes_list, myNotesList);
+    		transaction.add(R.id.notes_list, myNotesList, "NotesList");
     		transaction.commit();
     		setContentView(R.layout.activity_notes_start);
         }
         else {
         	
+        	action = savedInstanceState.getString( actionTag ) ;
+        	listPosition = savedInstanceState.getInt( listPositionTag ) ;
+        	
         	FragmentTransaction transaction = getFragmentManager().beginTransaction();
         	
         	if ( (savedInstanceState.getSerializable("NotesList")) != null ) {
         		myNotesList = (NotesList) savedInstanceState.getSerializable("NotesList");
-        		transaction.replace(R.id.notes_list, myNotesList);
+        		transaction.replace(R.id.notes_list, myNotesList, "NotesList");
         	}
         	else {
-        		myNotesDescription = (NotesDescription) savedInstanceState.getSerializable("NotesDescription");
-        		myNotesDescription = new NotesDescription(myNotesDescription.action, myNotesDescription.position);
-        		transaction.replace(R.id.notes_list, myNotesDescription);
+    			myNotesDescription = new NotesDescription();
+    			transaction.replace(R.id.notes_list, myNotesDescription, "Description");
         	}
     		transaction.commit();
     		setContentView(R.layout.activity_notes_start);
@@ -89,9 +95,12 @@ public class NotesStart extends ActionBarActivity {
 
 		switch (item.getItemId()) {
 		case R.id.add:
-			myNotesDescription = new NotesDescription("new", -1);
+			action = "new" ;
+			listPosition = -1;
+			myNotesDescription = new NotesDescription();
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-			transaction.replace(R.id.notes_list, myNotesDescription);
+			transaction.replace(R.id.notes_list, myNotesDescription, "Description");
+			transaction.addToBackStack("Description");
 			transaction.commit();
 
 			return true;
@@ -102,15 +111,17 @@ public class NotesStart extends ActionBarActivity {
 	
     @Override
     protected void onSaveInstanceState( Bundle outState ) 
-    {
+    {	
     	if ( myNotesList.isVisible() )
     	{
     		outState.putSerializable("NotesList", myNotesList);
     	}
-    	else if ( myNotesDescription.isVisible() )
-    	{
+    	else if ( myNotesDescription.isVisible() ){
     		outState.putSerializable("NotesDescription", myNotesDescription);
     	}
+    	
+    	outState.putString( actionTag,  action ) ;
+    	outState.putFloat( listPositionTag, listPosition );
     	
     	super.onSaveInstanceState( outState ) ;
     }
@@ -119,11 +130,14 @@ public class NotesStart extends ActionBarActivity {
 	 * 
 	 * @param position
 	 */
-	public void onNoteClicked(int position) {
-		
-		myNotesDescription = new NotesDescription("old", position);
+	public void onNoteClicked(int position) 
+	{
+		action = "old" ;
+		listPosition = position;
+		myNotesDescription = new NotesDescription();
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.replace(R.id.notes_list, myNotesDescription);
+		transaction.replace(R.id.notes_list, myNotesDescription, "Description");
+		transaction.addToBackStack("Description");
 		transaction.commit();
 	}
 
@@ -146,7 +160,7 @@ public class NotesStart extends ActionBarActivity {
 		
 		myNotesList = new NotesList();
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.replace(R.id.notes_list, myNotesList);
+		transaction.replace(R.id.notes_list, myNotesList, "NotesList");
 		transaction.commit();
 		
 		saveNotesInInternalStorage() ;
@@ -159,7 +173,7 @@ public class NotesStart extends ActionBarActivity {
 	{
 		myNotesList = new NotesList();
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.replace(R.id.notes_list, myNotesList);
+		transaction.replace(R.id.notes_list, myNotesList, "NotesList");
 		transaction.commit();
 	}
 
@@ -176,7 +190,7 @@ public class NotesStart extends ActionBarActivity {
 		
 		myNotesList = new NotesList();
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.replace(R.id.notes_list, myNotesList);
+		transaction.replace(R.id.notes_list, myNotesList, "NotesList");
 		transaction.commit();	
 		
 		saveNotesInInternalStorage() ;

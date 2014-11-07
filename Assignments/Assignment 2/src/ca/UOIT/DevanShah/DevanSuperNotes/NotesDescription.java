@@ -5,7 +5,9 @@ import java.util.Vector;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +29,8 @@ public class NotesDescription extends Fragment implements Serializable {
      */
     private static final long serialVersionUID = 1L ;
     
-	public String action;
-	public int position;
+	String action = NotesStart.action;
+	int position = NotesStart.listPosition;
 	Vector<Object> notes;
 	Activity myNotesStartActivity;
 	EditText noteTitle;
@@ -40,9 +42,8 @@ public class NotesDescription extends Fragment implements Serializable {
 	 * @param action 
 	 * @param action
 	 */
-	public NotesDescription(String action, int position) {
-		this.action = action;
-		this.position = position;
+	public NotesDescription() {
+
 	}
 	
 	/**
@@ -74,26 +75,16 @@ public class NotesDescription extends Fragment implements Serializable {
 		   displayDetails(position);
 		}
 		
+        // Construct the action to be done when there is a saved instance.
+        if ( savedInstanceState != null ) 
+        {
+        	((NotesStart) myNotesStartActivity).onCancel();
+        }
+
 		return view;
 	}
 	
-	public void onActivityCreated(Bundle savedInstanceState) {
-	    super.onActivityCreated(savedInstanceState);
-	    
-	    if (savedInstanceState != null) {
-	        //Restore the fragment's state here
-	    }
-	}
 	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-	    super.onSaveInstanceState(outState);
-
-	//Save the fragment's state here
-
-
-
-	}
 	/**
 	 * 
 	 * @param position
@@ -111,9 +102,26 @@ public class NotesDescription extends Fragment implements Serializable {
 	 */
 	private OnClickListener mySaveListener = new OnClickListener() 
 	{
-		public void onClick(View view) {
+		public void onClick(View view) 
+		{
 			Notes newNote = new Notes(noteTitle.getText().toString(), noteDescription.getText().toString());
-			((NotesStart) myNotesStartActivity).onSave(newNote,action,position);
+			
+			if ( newNote.getNoteTitle().isEmpty() )  
+			{
+				new AlertDialog.Builder(myNotesStartActivity)
+			    .setTitle("Empty Note Title")
+			    .setMessage("Please enter a Note Title before Saving. Thanks")
+			    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int which) { 
+			        	dialog.cancel();
+			        }
+			     })
+			    .setIcon(android.R.drawable.ic_dialog_alert)
+			    .show();
+			}
+			else {
+				((NotesStart) myNotesStartActivity).onSave(newNote,action,position);	
+			}
 		}
 	};
 	
