@@ -1,5 +1,6 @@
 package ca.UOIT.DevanShah.DevanSuperNotes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,8 +26,13 @@ import android.widget.SimpleAdapter;
  *
  */
 @SuppressLint("NewApi")
-public class NotesList extends Fragment {
+public class NotesList extends Fragment implements Serializable {
 
+    /**
+     * Default serialization constant for this object.
+     */
+    private static final long serialVersionUID = 1L ;
+	
 	ArrayList<Map<String, String>> notesExtracted;
 	Vector<Object> notes;
 	Activity myNotesStartActivity;

@@ -10,7 +10,6 @@ import java.util.Vector;
 
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -33,43 +32,39 @@ public class NotesStart extends ActionBarActivity {
 	/**
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		notes = new Vector<Object>() ;
 
-		System.out.println(getFilesDir() + "/NotesRawData.ser");
+		restoreNotesFromInternalStorage();
 		
-        // Create the File handle for the file that is checked if an restore is needed
-        notesRawDataFile = new File ( getFilesDir(), "NotesRawData.ser" ) ;
-
-        // Perform the restore only if the file exists.
-        if ( notesRawDataFile.exists() ) 
-        { 
-	        // Variable deceleration 
-	        ObjectInputStream notesRawDataRestore;
-	        
-	        try
-	        {
-	            // Open the stream to retrieve the election raw data from the file
-	        	notesRawDataRestore = new ObjectInputStream ( new FileInputStream ( notesRawDataFile.getAbsoluteFile() ) ) ;
-	            
-	            // Read the data in the file and store it in the votesCasted HashMap.
-	            notes = ( Vector<Object> ) notesRawDataRestore.readObject() ;
-	
-	            notesRawDataRestore.close() ; // Close the stream.
-	        }
-	        catch ( IOException e ) { e.printStackTrace() ; }
-	        catch ( ClassNotFoundException e ) { e.printStackTrace() ; }
+        // Construct the action to be done when there is a saved instance.
+        if ( savedInstanceState == null ) 
+        {
+    		myNotesList = new NotesList();
+    		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+    		transaction.add(R.id.notes_list, myNotesList);
+    		transaction.commit();
+    		setContentView(R.layout.activity_notes_start);
         }
-        
-		myNotesList = new NotesList();
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.add(R.id.notes_list, myNotesList);
-		transaction.commit();
-		setContentView(R.layout.activity_notes_start);
+        else {
+        	
+        	FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        	
+        	if ( (savedInstanceState.getSerializable("NotesList")) != null ) {
+        		myNotesList = (NotesList) savedInstanceState.getSerializable("NotesList");
+        		transaction.replace(R.id.notes_list, myNotesList);
+        	}
+        	else {
+        		myNotesDescription = (NotesDescription) savedInstanceState.getSerializable("NotesDescription");
+        		myNotesDescription = new NotesDescription(myNotesDescription.action, myNotesDescription.position);
+        		transaction.replace(R.id.notes_list, myNotesDescription);
+        	}
+    		transaction.commit();
+    		setContentView(R.layout.activity_notes_start);
+        }
 	}
 
 	/**
@@ -105,6 +100,21 @@ public class NotesStart extends ActionBarActivity {
 		}
 	}
 	
+    @Override
+    protected void onSaveInstanceState( Bundle outState ) 
+    {
+    	if ( myNotesList.isVisible() )
+    	{
+    		outState.putSerializable("NotesList", myNotesList);
+    	}
+    	else if ( myNotesDescription.isVisible() )
+    	{
+    		outState.putSerializable("NotesDescription", myNotesDescription);
+    	}
+    	
+    	super.onSaveInstanceState( outState ) ;
+    }
+    
 	/**
 	 * 
 	 * @param position
@@ -139,16 +149,7 @@ public class NotesStart extends ActionBarActivity {
 		transaction.replace(R.id.notes_list, myNotesList);
 		transaction.commit();
 		
-        // variable deceleration 
-        ObjectOutputStream notesRawDataOut ;
-        
-        try {
-            // Construct the stream to write the vector of notes saved already.
-            notesRawDataOut = new ObjectOutputStream ( new FileOutputStream ( notesRawDataFile.getAbsoluteFile() ) ) ;
-			notesRawDataOut.writeObject ( notes ) ;
-	        notesRawDataOut.flush() ; // flush the stream to make sure everything is written.
-	        notesRawDataOut.close() ; // Close the stream
-		} catch ( IOException e ) { e.printStackTrace() ; }
+		saveNotesInInternalStorage() ;
 	}
 
 	/**
@@ -177,5 +178,51 @@ public class NotesStart extends ActionBarActivity {
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.replace(R.id.notes_list, myNotesList);
 		transaction.commit();	
+		
+		saveNotesInInternalStorage() ;
+	}
+	
+	/**
+	 * 
+	 */
+	public void saveNotesInInternalStorage() 
+	{
+        // variable deceleration 
+        ObjectOutputStream notesRawDataOut ;
+        
+        try {
+            // Construct the stream to write the vector of notes saved already.
+            notesRawDataOut = new ObjectOutputStream ( new FileOutputStream ( notesRawDataFile.getAbsoluteFile() ) ) ;
+			notesRawDataOut.writeObject ( notes ) ;
+	        notesRawDataOut.flush() ; // flush the stream to make sure everything is written.
+	        notesRawDataOut.close() ; // Close the stream
+		} catch ( IOException e ) { e.printStackTrace() ; }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void restoreNotesFromInternalStorage() 
+	{
+		// Create the File handle for the file that is checked if an restore is needed
+        notesRawDataFile = new File ( getFilesDir(), "NotesRawData.ser" ) ;
+
+        // Perform the restore only if the file exists.
+        if ( notesRawDataFile.exists() ) 
+        { 
+	        // Variable deceleration 
+	        ObjectInputStream notesRawDataRestore;
+	        
+	        try
+	        {
+	            // Open the stream to retrieve the election raw data from the file
+	        	notesRawDataRestore = new ObjectInputStream ( new FileInputStream ( notesRawDataFile.getAbsoluteFile() ) ) ;
+	            
+	            // Read the data in the file and store it in the votesCasted HashMap.
+	            notes = ( Vector<Object> ) notesRawDataRestore.readObject() ;
+	
+	            notesRawDataRestore.close() ; // Close the stream.
+	        }
+	        catch ( IOException e ) { e.printStackTrace() ; }
+	        catch ( ClassNotFoundException e ) { e.printStackTrace() ; }
+        }
 	}
 }

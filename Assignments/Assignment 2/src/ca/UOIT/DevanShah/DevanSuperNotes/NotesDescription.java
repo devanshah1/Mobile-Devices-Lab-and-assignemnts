@@ -1,5 +1,6 @@
 package ca.UOIT.DevanShah.DevanSuperNotes;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import android.annotation.SuppressLint;
@@ -19,8 +20,13 @@ import android.widget.EditText;
  *
  */
 @SuppressLint("NewApi")
-public class NotesDescription extends Fragment {
+public class NotesDescription extends Fragment implements Serializable {
 
+    /**
+     * Default serialization constant for this object.
+     */
+    private static final long serialVersionUID = 1L ;
+    
 	public String action;
 	public int position;
 	Vector<Object> notes;
@@ -71,6 +77,23 @@ public class NotesDescription extends Fragment {
 		return view;
 	}
 	
+	public void onActivityCreated(Bundle savedInstanceState) {
+	    super.onActivityCreated(savedInstanceState);
+	    
+	    if (savedInstanceState != null) {
+	        //Restore the fragment's state here
+	    }
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+	    super.onSaveInstanceState(outState);
+
+	//Save the fragment's state here
+
+
+
+	}
 	/**
 	 * 
 	 * @param position
