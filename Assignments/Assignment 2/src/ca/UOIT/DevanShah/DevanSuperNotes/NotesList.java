@@ -91,8 +91,6 @@ public class NotesList extends Fragment implements Serializable {
             noteMap.put("Date", noteEntry.getNoteCreationDate());
             notesExtracted.add(noteMap);
         }
-        
-        //Collections.reverse(notesExtracted);
 	}
 
 	/**

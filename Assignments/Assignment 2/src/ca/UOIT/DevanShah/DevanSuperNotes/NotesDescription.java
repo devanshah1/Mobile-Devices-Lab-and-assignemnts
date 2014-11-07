@@ -80,10 +80,9 @@ public class NotesDescription extends Fragment implements Serializable {
         {
         	((NotesStart) myNotesStartActivity).onCancel();
         }
-
+		
 		return view;
 	}
-	
 	
 	/**
 	 * 
@@ -105,7 +104,6 @@ public class NotesDescription extends Fragment implements Serializable {
 		public void onClick(View view) 
 		{
 			Notes newNote = new Notes(noteTitle.getText().toString(), noteDescription.getText().toString());
-			
 			if ( newNote.getNoteTitle().isEmpty() )  
 			{
 				new AlertDialog.Builder(myNotesStartActivity)
