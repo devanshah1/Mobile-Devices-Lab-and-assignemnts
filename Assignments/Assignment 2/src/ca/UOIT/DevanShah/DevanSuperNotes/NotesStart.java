@@ -16,7 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 /**
- * 
+ * This class is used to perform the action for the main activity.
  * @author Devan Shah 100428864
  *
  */
@@ -40,48 +40,64 @@ public class NotesStart extends ActionBarActivity {
     private final String listPositionTag = "listPositionTag" ;
     
 	/**
-	 * 
+	 * This function is used to create the activity. This also handles activity changes
+	 * like rotation and destructions of activity.
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
-		
 		super.onCreate(savedInstanceState);
+		
+		// Initialize the notes Vector
 		notes = new Vector<Object>() ;
 
+		// Restore the notes from the internal application storage file if available.
 		restoreNotesFromInternalStorage();
 		
-        // Construct the action to be done when there is a saved instance.
+        // Construct the action to be done when there is no save instance state available
         if ( savedInstanceState == null ) 
         {
+        	// Create the new notes list fragment 
     		myNotesList = new NotesList();
+    		
+    		// Start the fragment transaction to place the fragment into the activity
     		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+    		// add the notes list fragment to the activity by replacing the FramLayout
     		transaction.add(R.id.notes_list, myNotesList, "NotesList");
-    		transaction.commit();
-    		setContentView(R.layout.activity_notes_start);
+    		transaction.commit(); // Commit the changes
+    		setContentView(R.layout.activity_notes_start); // Set the view for the activity
         }
         else {
         	
+        	// Restore the action and listPosition when onCreate function is called with a valid saveInstanceState bundle
         	action = savedInstanceState.getString( actionTag ) ;
         	listPosition = savedInstanceState.getInt( listPositionTag ) ;
         	
+        	// Start the fragment transaction to place the fragment into the activity
         	FragmentTransaction transaction = getFragmentManager().beginTransaction();
         	
-        	if ( (savedInstanceState.getSerializable("NotesList")) != null ) {
+        	// Check which fragment was placed into the save instance state bundle so that the correct one can be restored.
+        	// Restore the notes list fragment 
+        	if ( (savedInstanceState.getSerializable("NotesList")) != null ) 
+        	{
+        		// Get the serialized data of the fragment
         		myNotesList = (NotesList) savedInstanceState.getSerializable("NotesList");
         		transaction.replace(R.id.notes_list, myNotesList, "NotesList");
         	}
+        	// Restore the description fragment
         	else {
+        		// Create the description fragment
     			myNotesDescription = new NotesDescription();
+    			// Replace the notes list in the activity
     			transaction.replace(R.id.notes_list, myNotesDescription, "Description");
         	}
-    		transaction.commit();
-    		setContentView(R.layout.activity_notes_start);
+    		transaction.commit(); // Commit the changes
+    		setContentView(R.layout.activity_notes_start); 
         }
 	}
 
 	/**
-	 * 
+	 * Function is used to create the options menu
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,20 +107,26 @@ public class NotesStart extends ActionBarActivity {
 	}
 
 	/**
-	 * 
+	 * This function is used to handle when buttons in the action bar are selected.
+	 * Supports Add note.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
 
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-
+		/**
+		 * Switch through the possible options on the action bar and perform the actions accordingly. 
+		 */
 		switch (item.getItemId()) 
 		{
+			// Handle when the add is clicked
 			case R.id.add:
+				
+				// Set the action and listposition
 				action = "new" ;
 				listPosition = -1;
+				
+				// Create the new notes description with empty title and content
 				myNotesDescription = new NotesDescription();
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.replace(R.id.notes_list, myNotesDescription, "Description");
@@ -118,12 +140,13 @@ public class NotesStart extends ActionBarActivity {
 	}
 	
 	/**
-	 * 
+	 * This function is used to save the instance of the activity.
 	 * @param outState
 	 */
     @Override
     protected void onSaveInstanceState( Bundle outState ) 
     {	
+    	// Check which fragment is currently visible in the activity and store that one to the bundle
     	if ( myNotesList.isVisible() )
     	{
     		outState.putSerializable("NotesList", myNotesList);
@@ -132,6 +155,7 @@ public class NotesStart extends ActionBarActivity {
     		outState.putSerializable("NotesDescription", myNotesDescription);
     	}
     	
+    	// Samve the global variable used to construct description fragments
     	outState.putString( actionTag,  action ) ;
     	outState.putFloat( listPositionTag, listPosition );
     	
@@ -139,13 +163,16 @@ public class NotesStart extends ActionBarActivity {
     }
     
 	/**
-	 * 
-	 * @param position
+	 * This function is used to handle the action to be performed when item in the list view is clicked.
+	 * @param position - position value from the list view
 	 */
 	public void onNoteClicked(int position) 
 	{
+		// Set the action and listposition
 		action = "old" ;
 		listPosition = position;
+		
+		// Create the new notes description with empty title and content
 		myNotesDescription = new NotesDescription();
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.replace(R.id.notes_list, myNotesDescription, "Description");
@@ -154,57 +181,69 @@ public class NotesStart extends ActionBarActivity {
 	}
 
 	/**
-	 * 
-	 * @param newNote
-	 * @param action 
+	 * This 
+	 * @param newNote - The new note that needs to be saved
+	 * @param action - the action that was used to construct the fragment for description 
 	 */
 	public void onSave ( Notes newNote, String action, int position ) 
 	{
-		
+		// When the fragment was a new note make sure that the new note is added to the Vector
 		if ( action == "new" )
 		{
 		   notes.addElement(newNote);
 		}
+		// When the fragment is edit then remove the old note and add the new one to the Vector
 		else {
 		   notes.remove(position);
 		   notes.addElement(newNote);
 		}
 		
+		// Create the new notes list with
 		myNotesList = new NotesList();
+		
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.replace(R.id.notes_list, myNotesList, "NotesList");
 		transaction.commit();
 		
+		// Save the notes vector to the intern storage.
 		saveNotesInInternalStorage() ;
 	}
 
 	/**
-	 * 
+	 * This function is used to cancel the operation that the user has performed on the, 
+	 * editable note or discard the note if it is new.
 	 */
 	public void onCancel() 
 	{
+		// Create the new notes list with
 		myNotesList = new NotesList();
+		
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.replace(R.id.notes_list, myNotesList, "NotesList");
 		transaction.commit();
 	}
 
 	/**
-	 * 
+	 * This function is used to delete the note that is selected by the user. 
 	 * @param position
 	 */
 	public void onDelete(int position) 
 	{
+		// Only remote elements if a position is positive,
+		// to avoid null expections
 		if ( position >= 0 ) 
 		{
 			notes.remove(position);
 		}
 		
+		// Create the new notes list with
 		myNotesList = new NotesList();
+		
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.replace(R.id.notes_list, myNotesList, "NotesList");
 		transaction.commit();	
 		
+		// Save the notes vector to the intern storage.
 		saveNotesInInternalStorage() ;
 	}
 	
@@ -228,7 +267,8 @@ public class NotesStart extends ActionBarActivity {
 	}
 	
 	/**
-	 * This 
+	 * This function is used to restore the notes saved by the user from the internal
+	 * application file.
 	 */
 	@SuppressWarnings("unchecked")
 	public void restoreNotesFromInternalStorage() 
