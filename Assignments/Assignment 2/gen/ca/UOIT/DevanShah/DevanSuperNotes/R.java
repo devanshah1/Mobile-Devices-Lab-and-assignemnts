@@ -1216,10 +1216,12 @@ containing a value of this type.
     }
     public static final class string {
         public static final int Cancel=0x7f0a0015;
+        public static final int Content=0x7f0a0017;
         public static final int Delete=0x7f0a0016;
         public static final int Note=0x7f0a0011;
         public static final int Save=0x7f0a0014;
         public static final int Title=0x7f0a0010;
+        public static final int TitleInput=0x7f0a0018;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f0a0001;

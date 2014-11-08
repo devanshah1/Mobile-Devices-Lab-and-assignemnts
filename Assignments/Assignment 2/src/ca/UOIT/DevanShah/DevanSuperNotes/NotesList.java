@@ -33,8 +33,11 @@ public class NotesList extends Fragment implements Serializable {
      */
     private static final long serialVersionUID = 1L ;
 	
+    // Date Structure Deceleration
 	ArrayList<Map<String, String>> notesExtracted;
 	Vector<Object> notes;
+	
+	// Stores the main activity
 	Activity myNotesStartActivity;
 
 	/**
@@ -81,14 +84,20 @@ public class NotesList extends Fragment implements Serializable {
         	  }
         });
         
-		// Loop through the note vector and build a HashMap
+		// Loop through the note vector and build a HashMap and add it to the ArrayList
         for ( int i = 0; i < notes.size(); i++ )
         {
+        	// Create a new HashMap
         	noteMap = new HashMap<String, String>();
+        	
+        	// Grab the notes entry
             Notes noteEntry = ( ( Notes ) notes.elementAt (i) ) ;
             
-            noteMap.put("Title", noteEntry.getNoteTitle());
-            noteMap.put("Date", noteEntry.getNoteCreationDate());
+            // Put the Title and Date from the notes object into the HashMap
+            noteMap.put ( "Title", noteEntry.getNoteTitle() );
+            noteMap.put ( "Date", noteEntry.getNoteCreationDate() );
+            
+            // Put the HashMap into the ArrayList
             notesExtracted.add(noteMap);
         }
 	}
@@ -96,8 +105,9 @@ public class NotesList extends Fragment implements Serializable {
 	/**
 	 * 
 	 */
-	private OnItemClickListener noteSelected = new OnItemClickListener() {
-		public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
+	private OnItemClickListener noteSelected = new OnItemClickListener() 
+	{
+		public void onItemClick ( AdapterView<?> parent, View v, int position, long id ) 
 		{	
 			((NotesStart) myNotesStartActivity).onNoteClicked(position);
 		}

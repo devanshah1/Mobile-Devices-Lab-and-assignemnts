@@ -14,7 +14,7 @@
         android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/Title"
+        android:hint="@string/TitleInput"
         android:inputType="textCapWords"
         android:maxLines="1" >
 
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="250dp"
         android:height="345dp"
-        android:hint="@string/Note"
+        android:hint="@string/Content"
         android:inputType="textCapSentences|textMultiLine"
         android:isScrollContainer="true"
         android:maxLength="2000"

@@ -21,7 +21,7 @@
         android:layout_toLeftOf="@+id/button1"
         android:ems="10"
         android:height="345dp"
-        android:hint="@string/Note"
+        android:hint="@string/Content"
         android:inputType="textCapSentences|textMultiLine"
         android:isScrollContainer="true"
         android:maxLength="2000"
@@ -34,7 +34,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView1"
         android:ems="10"
-        android:hint="@string/Title"
+        android:hint="@string/TitleInput"
         android:inputType="textCapWords"
         android:maxLines="1" >
 

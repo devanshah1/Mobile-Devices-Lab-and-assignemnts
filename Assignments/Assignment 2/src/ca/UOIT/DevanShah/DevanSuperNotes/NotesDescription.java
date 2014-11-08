@@ -101,21 +101,22 @@ public class NotesDescription extends Fragment implements Serializable {
 	 */
 	private OnClickListener mySaveListener = new OnClickListener() 
 	{
-		public void onClick(View view) 
+		public void onClick ( View view ) 
 		{
 			Notes newNote = new Notes(noteTitle.getText().toString(), noteDescription.getText().toString());
 			if ( newNote.getNoteTitle().isEmpty() )  
 			{
 				new AlertDialog.Builder(myNotesStartActivity)
-			    .setTitle("Empty Note Title")
-			    .setMessage("Please enter a Note Title before Saving. Thanks")
-			    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-			        public void onClick(DialogInterface dialog, int which) { 
-			        	dialog.cancel();
-			        }
-			     })
-			    .setIcon(android.R.drawable.ic_dialog_alert)
-			    .show();
+			    			   .setTitle("Empty Note Title")
+			    			   .setMessage("Please enter a Note Title before Saving. Thanks")
+			    			   .setPositiveButton ( android.R.string.ok, 
+			    					   			    new DialogInterface.OnClickListener() {
+			    				   						public void onClick(DialogInterface dialog, int which) { 
+			    				   							dialog.cancel();
+			    				   						}
+			    			   })
+			    			   .setIcon(android.R.drawable.ic_dialog_alert)
+			    			   .show();
 			}
 			else {
 				((NotesStart) myNotesStartActivity).onSave(newNote,action,position);	

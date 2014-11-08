@@ -11,5 +11,7 @@
     <string name="Save">SAVE</string>
     <string name="Cancel">CANCEL</string>
     <string name="Delete">DELETE</string>
+    <string name="Content">Input Content</string>
+    <string name="TitleInput">Input Note Title</string>
 
 </resources>

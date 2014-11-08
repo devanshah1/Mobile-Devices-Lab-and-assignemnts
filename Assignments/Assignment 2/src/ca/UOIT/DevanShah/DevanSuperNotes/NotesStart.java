@@ -23,12 +23,19 @@ import android.view.MenuItem;
 @SuppressLint({ "UseSparseArrays", "UseValueOf", "NewApi" })
 public class NotesStart extends ActionBarActivity {
 
+	// Variable Deceleration
 	public static String action;
 	public static int listPosition;
+	
+	// Date Structure Deceleration
 	public Vector<Object> notes;
+	
+	// Object Deceleration
 	public NotesDescription myNotesDescription;
 	public NotesList myNotesList;
 	public File notesRawDataFile ;
+	
+	// Variable Tags
     private final String actionTag = "actionTag";
     private final String listPositionTag = "listPositionTag" ;
     
@@ -93,22 +100,27 @@ public class NotesStart extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 
-		switch (item.getItemId()) {
-		case R.id.add:
-			action = "new" ;
-			listPosition = -1;
-			myNotesDescription = new NotesDescription();
-			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-			transaction.replace(R.id.notes_list, myNotesDescription, "Description");
-			transaction.addToBackStack("Description");
-			transaction.commit();
+		switch (item.getItemId()) 
+		{
+			case R.id.add:
+				action = "new" ;
+				listPosition = -1;
+				myNotesDescription = new NotesDescription();
+				FragmentTransaction transaction = getFragmentManager().beginTransaction();
+				transaction.replace(R.id.notes_list, myNotesDescription, "Description");
+				transaction.addToBackStack("Description");
+				transaction.commit();
 
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item) ;
 		}
 	}
 	
+	/**
+	 * 
+	 * @param outState
+	 */
     @Override
     protected void onSaveInstanceState( Bundle outState ) 
     {	
@@ -197,7 +209,8 @@ public class NotesStart extends ActionBarActivity {
 	}
 	
 	/**
-	 * 
+	 * Used to store the Vector of notes to a file located on the internal storage 
+	 * of the device. Saves using serialization to make the data secure. 
 	 */
 	public void saveNotesInInternalStorage() 
 	{
@@ -206,13 +219,17 @@ public class NotesStart extends ActionBarActivity {
         
         try {
             // Construct the stream to write the vector of notes saved already.
-            notesRawDataOut = new ObjectOutputStream ( new FileOutputStream ( notesRawDataFile.getAbsoluteFile() ) ) ;
-			notesRawDataOut.writeObject ( notes ) ;
+			notesRawDataOut = new ObjectOutputStream(new FileOutputStream(
+					notesRawDataFile.getAbsoluteFile()));
+			notesRawDataOut.writeObject ( notes ) ; // Write the object
 	        notesRawDataOut.flush() ; // flush the stream to make sure everything is written.
 	        notesRawDataOut.close() ; // Close the stream
 		} catch ( IOException e ) { e.printStackTrace() ; }
 	}
 	
+	/**
+	 * This 
+	 */
 	@SuppressWarnings("unchecked")
 	public void restoreNotesFromInternalStorage() 
 	{
@@ -227,10 +244,11 @@ public class NotesStart extends ActionBarActivity {
 	        
 	        try
 	        {
-	            // Open the stream to retrieve the election raw data from the file
-	        	notesRawDataRestore = new ObjectInputStream ( new FileInputStream ( notesRawDataFile.getAbsoluteFile() ) ) ;
+	            // Open the stream to retrieve the saved notes from the file.
+				notesRawDataRestore = new ObjectInputStream(
+						new FileInputStream(notesRawDataFile.getAbsoluteFile()));
 	            
-	            // Read the data in the file and store it in the votesCasted HashMap.
+	            // Read the data in the file and store it in the notes vector.
 	            notes = ( Vector<Object> ) notesRawDataRestore.readObject() ;
 	
 	            notesRawDataRestore.close() ; // Close the stream.
