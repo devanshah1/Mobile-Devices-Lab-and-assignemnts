@@ -13,14 +13,10 @@ import java.util.Vector;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -65,34 +61,8 @@ import android.widget.ImageView;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_start);
         
-		final LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		
-		final LocationListener listener = new LocationListener() 
-		{
-			@Override
-			public void onLocationChanged(Location location) 
-			{
-				LATITUDE = location.getLatitude();
-				LONGITUDE = location.getLongitude();
-			}
-
-			@Override
-			public void onStatusChanged(String provider, int status, Bundle extras) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void onProviderEnabled(String provider) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void onProviderDisabled(String provider) {
-				// TODO Auto-generated method stub
-			}
-		};
-		
-		manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+        PhotoLocationManager photoLocationManager = new PhotoLocationManager(this);
+        photoLocationManager.locationManager();
         
         // Get the default locale for the current configuration
         geocoder = new Geocoder(this, Locale.getDefault());
@@ -174,13 +144,25 @@ import android.widget.ImageView;
                 
                 // Set the path to the current photo for Photo Info creation
                 myCurrentPhotoPath = constructedPhotoFile.getAbsolutePath();
-                addresses = geocoder.getFromLocation(43.9000, 78.8500, 1);
                 
-                if ( addresses.isEmpty() ) {
-                	myCurrentPhotoGeoLocation = Double.toString(LATITUDE) + ", " + Double.toString(LONGITUDE) ;
+                if ( Geocoder.isPresent()) {
+                	System.out.println("GEOCODING IS ON");
                 }
                 else {
-                    myCurrentPhotoGeoLocation = addresses.get(0).getAddressLine(0);	
+                	System.out.println("GEOCODING IS OFF");
+                }
+                
+                addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+                
+                if ( addresses.size() > 0 ) 
+                {
+                	for (int index = 0; index < addresses.get(0).getMaxAddressLineIndex(); index++) 
+                	{
+                		myCurrentPhotoGeoLocation += addresses.get(0).getAddressLine(index);
+                	}
+                }
+                else {
+                	myCurrentPhotoGeoLocation = Double.toString(LATITUDE) + ", " + Double.toString(LONGITUDE) ;
                 }
             }
             // Error occurred while creating the File
