@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DevanSuperPhotoList</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+	<string name="camera">Camera</string>
+	<string name="imageHolder">Image Holder</string>
+	<string name="Thumbnail">Thumbnail</string>
+	<string name="FileName">File Name</string>
+	<string name="Date">Date</string>
+	<string name="GeoLocation">Geo Location</string>
+	<string name="Cancel">CANCEL</string>
+    <string name="Delete">DELETE</string>
+    <string name="LargeView">Photo Large View</string>
+    
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="6dip"
+    android:paddingTop="4dip" >
+
+    <ImageView
+        android:id="@+id/photoThumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/Thumbnail"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/GEO_LOCATION_CELL"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_weight="1.52"
+        android:ellipsize="end"
+        android:gravity="center_vertical|left"
+        android:maxLines="1"
+        android:textSize="12sp"
+        android:width="140dp" />
+
+    <TextView
+        android:id="@+id/DATE_CELL"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.62"
+        android:gravity="center_vertical|right"
+        android:maxLength="50"
+        android:maxLines="1"
+        android:textColor="#9C9C9C"
+        android:textSize="12sp" />
+
+</LinearLayout>
