@@ -5,7 +5,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 /**
- * 
+ * This class is used to store the general information of an image
  * @author Devan Shah 100428864
  *
  */
@@ -28,7 +28,7 @@ public class PhotoInfo implements Serializable, Comparable<PhotoInfo>
 	static DateFormat DateFormatter = DateFormat.getDateInstance();
 	
 	/**
-	 * 
+	 * Default constructor that is used to initialize the values.
 	 * @param photoThumbnail
 	 * @param photoGeoLocation
 	 * @param photosDirectory
@@ -43,16 +43,8 @@ public class PhotoInfo implements Serializable, Comparable<PhotoInfo>
 	}
 	
 	/**
-	 * Convert the photo into a string if needed. (not used)
-	 */
-	@Override
-	public String toString() {
-		return photoGeoLocation + " " + getPhotoCreationDate() + ">";
-	}
-	
-	/**
-	 * 
-	 * @return
+	 * Return the photo's geo location
+	 * @return photoGeoLocation
 	 */
 	public String getPhotoGeoLocation() 
 	{
@@ -60,8 +52,8 @@ public class PhotoInfo implements Serializable, Comparable<PhotoInfo>
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Return the photo's path on the device
+	 * @return photoPathOnDevice
 	 */
 	public String getPhotoDirectory() 
 	{
@@ -69,8 +61,8 @@ public class PhotoInfo implements Serializable, Comparable<PhotoInfo>
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Return the photo's file name
+	 * @return photoFileName
 	 */
 	public String getPhotoFileName() 
 	{
@@ -84,8 +76,8 @@ public class PhotoInfo implements Serializable, Comparable<PhotoInfo>
 	 * only the data is returned. 
 	 * @return
 	 */
-	public String getPhotoCreationDate() {
-		
+	public String getPhotoCreationDate() 
+	{
 		// Get the current date
 		Date currentDate = new Date();
 		

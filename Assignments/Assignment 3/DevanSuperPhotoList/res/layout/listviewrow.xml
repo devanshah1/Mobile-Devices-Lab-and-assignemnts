@@ -19,7 +19,6 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/photoThumbnail"
         android:ellipsize="end"
-        android:gravity="center"
         android:maxLines="1"
         android:text="@string/FileName"
         android:textSize="12sp" />

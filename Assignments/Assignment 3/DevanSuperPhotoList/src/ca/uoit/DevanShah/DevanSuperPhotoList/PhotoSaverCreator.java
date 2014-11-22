@@ -12,15 +12,18 @@ import android.os.Environment;
 import android.util.Log;
 
 /**
- * 
+ * This class is used to save and create the photo. Also used to 
+ * resize the photo.
  * @author Devan Shah 100428864
  *
  */
-@SuppressLint("SimpleDateFormat") public class PhotoSaverCreator 
+@SuppressLint("SimpleDateFormat") 
+public class PhotoSaverCreator 
 {
 	/**
-	 * 
-	 * @return
+	 * This function is used to create the photo file under a specific location in the 
+	 * Picture directory.
+	 * @return photoFile - return the photoFile File object
 	 * @throws IOException
 	 */
     public static File createPhotoFile() throws IOException 
@@ -29,8 +32,8 @@ import android.util.Log;
     	String APP_PHOTO_DIR = "/DevanSuperPhotoList/";
     	
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        PhotoStart.myCurrentPhotoFileName = "IMG_" + timeStamp + ".jpg" ;
+    	String timeStamp = new SimpleDateFormat("MMddyyyyHHmmss").format(new Date());
+    	PhotoStart.myCurrentPhotoFileName = "IMG" + timeStamp + ".jpg" ;
         
         // Create the File object for the photo storage directory for this application
         File appPhotoStorageDir = new File ( Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + APP_PHOTO_DIR );
@@ -60,38 +63,39 @@ import android.util.Log;
     }
     
     /**
-     * @return 
-     * 
+     * This function is used to resize the images and return the resized image.
+     * @return bitmap of the image that was resized
      */
     public static Bitmap resizePhoto( String photoPath, int width, int height ) 
     {
-		/* There isn't enough memory to open up more than a couple camera photos */
-		/* So pre-scale the target bitmap into which the file is decoded */
-
-		/* Get the size of the ImageView */
+    	// Variables deceleration
+		int scaleFactor = 1;
+		int photoW;
+		int photoH;
+		
+		// Set the size the image needs to be
 		int targetW = width;
 		int targetH = height;
 
-		/* Get the size of the image */
+		// Get the current size of the image
 		BitmapFactory.Options bmOptions = new BitmapFactory.Options();
 		bmOptions.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(photoPath, bmOptions);
-		int photoW = bmOptions.outWidth;
-		int photoH = bmOptions.outHeight;
+		photoW = bmOptions.outWidth;
+		photoH = bmOptions.outHeight;
 		
-		/* Figure out which way needs to be reduced less */
-		int scaleFactor = 1;
-		if ((targetW > 0) || (targetH > 0)) {
-			scaleFactor = Math.min(photoW/targetW, photoH/targetH);	
+		// Determine a new scale factor based on the target and photo
+		// height and width.
+		if ( (targetW > 0) || (targetH > 0) ) 
+		{
+			scaleFactor = Math.min(photoW / targetW, photoH / targetH);
 		}
-
-		/* Set bitmap options to scale the image decode target */
+		
+		// Set bitmap options to scale the image decode target
 		bmOptions.inJustDecodeBounds = false;
 		bmOptions.inSampleSize = scaleFactor;
-		//bmOptions.inPurgeable = true;
 
-		/* Decode the JPEG file into a Bitmap */
+		// Decode the file and return the bitmap
 		return BitmapFactory.decodeFile(photoPath, bmOptions);
-		
 	}
 }

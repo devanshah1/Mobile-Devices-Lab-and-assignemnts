@@ -16,6 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+/**
+ * This class is used to display the photo view fragment
+ * @author Devan Shah 100428864
+ *
+ */
 public class PhotosView  extends Fragment implements Serializable  
 {
 
@@ -31,9 +36,9 @@ public class PhotosView  extends Fragment implements Serializable
 	Vector<Object> photos;
 	
 	// Declare the main activity
-	Activity myNotesStartActivity;
+	Activity myPhotosStartActivity;
 	
-	// Declare the edit text objects
+	// Declare photo view imageview object
 	public static ImageView photoView ;
 	
 	/**
@@ -53,13 +58,13 @@ public class PhotosView  extends Fragment implements Serializable
 		View view = inflater.inflate(R.layout.photo_view, container, false);
 		
 		// Get the main activity
-		myNotesStartActivity = getActivity();
+		myPhotosStartActivity = getActivity();
 		
-		// get the note vector from the main activity
-		photos = ((PhotoStart) myNotesStartActivity).photos;
+		// get the photos vector from the main activity
+		photos = ((PhotoStart) myPhotosStartActivity).photos;
 		
-		// Get the myNotesDescription object from the main activity
-		((PhotoStart) myNotesStartActivity).myPhotesView = this;
+		// Set the myPhotosView object from the main activity
+		((PhotoStart) myPhotosStartActivity).myPhotesView = this;
 		
 		photoView = (ImageView) view.findViewById(R.id.imageView1);
 		
@@ -71,15 +76,15 @@ public class PhotosView  extends Fragment implements Serializable
 		Button delete = (Button) view.findViewById(R.id.button2);
 		delete.setOnClickListener(myDeleteListener);
 		
-		// When the description fragment creation is requested as an old note 
-		// display the title and content of the note.
+		// When the description fragment creation is requested display
+		// the information for the selected note.
 		displayDetails(position);
 		
         // Construct the action to be done when there is a saved instance.
         if ( savedInstanceState != null ) 
         {
         	// Cancel the action when instance is saved.
-        	((PhotoStart) myNotesStartActivity).onCancel();
+        	((PhotoStart) myPhotosStartActivity).onCancel();
         }
 		
 		return view;
@@ -91,12 +96,11 @@ public class PhotosView  extends Fragment implements Serializable
 	 */
 	public void displayDetails ( int position ) 
 	{
-		// get the note in the position that the info needs to be displayed.
+		// get the photoInfo Object in the position that the info needs to be displayed.
 		PhotoInfo currentPhoto = (PhotoInfo) photos.get(position);
 		
-		// Set the large image for the photo
+		// Set the larger image for the photo
 		photoView.setImageBitmap((Bitmap) PhotoSaverCreator.resizePhoto((String) currentPhoto.getPhotoDirectory(), photoView.getWidth(), photoView.getHeight()));
-		
 	}
 	
 	/**
@@ -108,7 +112,7 @@ public class PhotosView  extends Fragment implements Serializable
 		public void onClick(View view) 
 		{
 			// Call the cancel function from the main activity.
-			((PhotoStart) myNotesStartActivity).onCancel();
+			((PhotoStart) myPhotosStartActivity).onCancel();
 		}
 	};
 	
@@ -121,27 +125,27 @@ public class PhotosView  extends Fragment implements Serializable
 		public void onClick(View view) 
 		{
 			// Create the dialog to notify the user
-			new AlertDialog.Builder(myNotesStartActivity)
+			new AlertDialog.Builder(myPhotosStartActivity)
 		    			   .setTitle("Delete Photo") // Set the title
 		    			   .setMessage("Are you sure you want to delete selected photo?") // Set the message
 		    			   .setPositiveButton ( android.R.string.yes, // Set the type of button
-		    					   			    new DialogInterface.OnClickListener() // Create the new on click listener for click of ok
+		    					   			    new DialogInterface.OnClickListener() // Create the new on click listener for click of yes
 		    			   						{
-		    				   						// handle the on click of ok
+		    				   						// handle the on click of yes
 		    				   						public void onClick(DialogInterface dialog, int which) 
 		    				   						{ 
-		    				   							// Call the delete function from the main activity. To remove the note that was selected.
-		    				   							((PhotoStart) myNotesStartActivity).onDelete(position);
+		    				   							// Call the delete function from the main activity. To remove the photo that was selected.
+		    				   							((PhotoStart) myPhotosStartActivity).onDelete(position);
 		    				   						}
 		    			   						}
 		    					   			   )
 		    	           .setNegativeButton ( android.R.string.no, // Set the type of button
-		    					   			    new DialogInterface.OnClickListener() // Create the new on click listener for click of ok
+		    					   			    new DialogInterface.OnClickListener() // Create the new on click listener for click of no
 		    			   						{
-		    				   						// handle the on click of ok
+		    				   						// handle the on click of no
 		    				   						public void onClick(DialogInterface dialog, int which) 
 		    				   						{ 
-		    				   							// Close the dialog button and let the user go back to adding title
+		    				   							// Close the dialog button and let the user go back photo view
 		    				   							dialog.cancel();
 		    				   						}
 		    			   						}

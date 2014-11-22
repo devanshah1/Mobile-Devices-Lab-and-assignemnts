@@ -17,6 +17,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+/**
+ * This class is used to create the photo list fragment.
+ * @author Devan Shah 100428864
+ *
+ */
 public class PhotosList extends Fragment implements Serializable 
 {
     /**
@@ -29,7 +34,7 @@ public class PhotosList extends Fragment implements Serializable
 	Vector<Object> photos;
 	
 	// Stores the main activity
-	public static Activity myNotesStartActivity;
+	public static Activity myPhotosStartActivity;
 	
 	/**
 	 * Default constructor
@@ -48,23 +53,25 @@ public class PhotosList extends Fragment implements Serializable
 		View view = inflater.inflate(R.layout.photos_list, container, false);
 		
 		// Get the main activity
-		myNotesStartActivity = getActivity();
+		myPhotosStartActivity = getActivity();
 		
-		// get the note vector from the main activity
-		photos = ((PhotoStart) myNotesStartActivity).photos;
+		// get the photos vector from the main activity
+		photos = ((PhotoStart) myPhotosStartActivity).photos;
 		
-		// Initialize the ArrayList<Map<String, String>>()
+		// Initialize the ArrayList<PhotoInfo>()
 		photosExtracted = new ArrayList<PhotoInfo>();
 		
-		// Build the ArrayList<Map<String, String>>() using the notes object
+		// Build the List<PhotoInfo> using the photo object
 		buildPhotosArray();
-		
-		CustomImageHandlerAdapter photosAdapter = new CustomImageHandlerAdapter ( myNotesStartActivity, R.layout.listviewrow, (ArrayList<PhotoInfo>) photosExtracted ) ;
-		
+		CustomImageHandlerAdapter photosAdapter = new CustomImageHandlerAdapter ( myPhotosStartActivity, 
+																				  R.layout.listviewrow, 
+																				  (ArrayList<PhotoInfo>) photosExtracted 
+																				) ;
 		// Grab the list view so that it can be placed in
 		ListView listView = (ListView) view.findViewById(R.id.listView1);
 		listView.setAdapter(photosAdapter); // Set the adapter in the list view
 		listView.setOnItemClickListener(photoSelected); // Enable the on click listener when entries in the list view are clicked
+		
 		return view;
 	}
 	
@@ -76,20 +83,20 @@ public class PhotosList extends Fragment implements Serializable
 		// On item click for the list view
 		public void onItemClick ( AdapterView<?> parent, View v, int position, long id ) 
 		{	
-			// Perform the action for on note clicked, call the function from the main activity.
-			((PhotoStart) myNotesStartActivity).onPhotoClicked(position);
+			// Perform the action for on photo clicked, call the function from the main activity.
+			((PhotoStart) myPhotosStartActivity).onPhotoClicked(position);
 		}
 	};
 	
 	/**
-	 * This function is used to create the ArrayList<Map<String, String>>() using Vector<Object> of notes
+	 * This function is used to create the ArrayList<PhotoInfo>() using Vector<Object> of photos
 	 */
 	private void buildPhotosArray() {
 		
-		// Sort the entries that are in the notes vector, by date. This is to display the latest note first.
+		// Sort the entries that are in the photos vector, by date. This is to display the latest photo first.
         Collections.sort ( photos, new Comparator<Object>() 
         {
-        	  // Define a compare function that calls the compareTo available in the Notes class. (for each note)
+        	  // Define a compare function that calls the compareTo available in the PhotoInfo class. (for each photo)
         	  public int compare ( Object a, Object b ) 
         	  {
         		// Return the values of compare conditions, 1, -1, 0  
@@ -97,13 +104,13 @@ public class PhotosList extends Fragment implements Serializable
         	  }
         });
         
-		// Loop through the note vector and build a HashMap and add it to the ArrayList
+		// Loop through the photos vector and build a ArrayList
         for ( int i = 0; i < photos.size(); i++ )
         {	
-        	// Grab the notes entry
+        	// Grab the photoInfo entry
         	PhotoInfo photoEntry = ( ( PhotoInfo ) photos.elementAt (i) ) ;
             
-            // Put the HashMap into the ArrayList
+            // Put the PhotoInfo entry into the ArrayList
         	photosExtracted.add(photoEntry);
         }
 	}

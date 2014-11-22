@@ -455,17 +455,38 @@ containing a value of this type.
         public static final int photo_start=0x7f0a0000;
     }
     public static final class string {
-        public static final int Cancel=0x7f05002c;
-        public static final int Date=0x7f05002a;
-        public static final int Delete=0x7f05002d;
-        public static final int FileName=0x7f050029;
-        public static final int GeoLocation=0x7f05002b;
-        public static final int LargeView=0x7f05002e;
-        public static final int Thumbnail=0x7f050028;
+        public static final int Cancel=0x7f05003c;
+        public static final int Date=0x7f050038;
+        public static final int Delete=0x7f05003a;
+        public static final int FileName=0x7f050037;
+        public static final int GeoLocation=0x7f050039;
+        public static final int IO_Exception_getFromLocation=0x7f05004a;
+        public static final int LargeView=0x7f05003b;
+        public static final int Thumbnail=0x7f050036;
         public static final int accept=0x7f050002;
-        public static final int action_settings=0x7f050025;
-        public static final int app_name=0x7f050023;
-        public static final int camera=0x7f050026;
+        public static final int action_settings=0x7f050033;
+        public static final int address=0x7f050040;
+        /** 
+  Copyright (C) 2013 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+    
+ User interface labels and strings 
+ Address format 
+         */
+        public static final int address_output_string=0x7f05003d;
+        public static final int app_name=0x7f050031;
+        public static final int camera=0x7f050034;
         /**   Text for notification shown when the Android Wear apps needs to be updated. Only shown on the wearable. [CHAR LIMIT=NONE] 
          */
         public static final int common_android_wear_notification_needs_update_text=0x7f050009;
@@ -565,13 +586,64 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f050020;
+        /**  Messages 
+         */
+        public static final int connected=0x7f050041;
+        public static final int connection_error_code=0x7f050023;
+        public static final int connection_error_code_unknown=0x7f050042;
+        public static final int connection_error_disabled=0x7f050024;
+        public static final int connection_error_internal=0x7f050025;
+        public static final int connection_error_invalid=0x7f050026;
+        public static final int connection_error_invalid_account=0x7f050027;
+        public static final int connection_error_license_check_failed=0x7f050028;
+        public static final int connection_error_message=0x7f050029;
+        public static final int connection_error_misconfigured=0x7f05002a;
+        public static final int connection_error_missing=0x7f05002b;
+        public static final int connection_error_needs_resolution=0x7f05002c;
+        public static final int connection_error_network=0x7f05002d;
+        public static final int connection_error_outdated=0x7f05002e;
+        public static final int connection_error_sign_in_required=0x7f05002f;
+        public static final int connection_error_unknown=0x7f050030;
+        public static final int connection_failed=0x7f050043;
         public static final int create_calendar_message=0x7f050005;
         public static final int create_calendar_title=0x7f050004;
         public static final int decline=0x7f050003;
-        public static final int hello_world=0x7f050024;
-        public static final int imageHolder=0x7f050027;
+        public static final int disconnected=0x7f050044;
+        public static final int get_address=0x7f050045;
+        public static final int get_location=0x7f050046;
+        public static final int hello_world=0x7f050032;
+        public static final int illegal_argument_exception=0x7f050047;
+        public static final int imageHolder=0x7f050035;
+        public static final int invalid_action=0x7f050048;
+        public static final int invalid_integer_id=0x7f050049;
+        /**  Latitude, longitude format 
+         */
+        public static final int latitude_longitude=0x7f05003e;
+        /**  Labels 
+         */
+        public static final int latlng=0x7f05003f;
+        public static final int location_requested=0x7f05004b;
+        public static final int location_update_error=0x7f05004d;
+        public static final int location_update_error_detail=0x7f05004e;
+        public static final int location_update_missing_update=0x7f05004f;
+        public static final int location_updated=0x7f05004c;
+        public static final int location_updates_stopped=0x7f050050;
+        public static final int log_new_location=0x7f050051;
+        public static final int no_address_found=0x7f050052;
+        public static final int no_connection=0x7f050053;
+        public static final int no_geocoder_available=0x7f050054;
+        public static final int no_location_available=0x7f050055;
+        public static final int no_resolution=0x7f050057;
+        public static final int periodic_update_stop=0x7f050058;
+        public static final int play_services_available=0x7f050059;
+        public static final int request_location_updates_in_progress=0x7f05005a;
+        public static final int resolved=0x7f050056;
+        public static final int start_updates=0x7f05005b;
+        public static final int stop_updates=0x7f05005c;
         public static final int store_picture_message=0x7f050001;
         public static final int store_picture_title=0x7f050000;
+        public static final int unknown=0x7f05005d;
+        public static final int unknown_activity_request_code=0x7f05005e;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */
